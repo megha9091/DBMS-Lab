@@ -1,0 +1,277 @@
+EXPERIMENT NO:1
+----------------
+CREATION OF A DATABASE USING DDL COMMANDS
+-----------------------------------------
+
+
+SQL> create table Stud1(id number(5),name varchar(20),age number(3),city varchar(20));
+
+Table created.
+
+SQL> desc Stud1;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ ID                                                 NUMBER(5)
+ NAME                                               VARCHAR2(20)
+ AGE                                                NUMBER(3)
+ CITY                                               VARCHAR2(20)
+
+SQL> alter table Stud1 add dob date;
+
+Table altered.
+
+SQL> desc Stud1;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ ID                                                 NUMBER(5)
+ NAME                                               VARCHAR2(20)
+ AGE                                                NUMBER(3)
+ CITY                                               VARCHAR2(20)
+ DOB                                                DATE
+
+SQL> alter table Stud1 modify age int;
+
+Table altered.
+
+SQL> alter table Stud1 drop column city;
+
+Table altered.
+
+SQL> desc Stud1;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ ID                                                 NUMBER(5)
+ NAME                                               VARCHAR2(20)
+ AGE                                                NUMBER(38)
+ DOB                                                DATE
+
+SQL> create table cust(cust_id  number primary key,address varchar(25),city varchar(20),ph_no number);
+
+Table created.
+
+SQL> desc cust
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ CUST_ID                                   NOT NULL NUMBER
+ ADDRESS                                            VARCHAR2(25)
+ CITY                                               VARCHAR2(20)
+ PH_NO                                              NUMBER
+
+SQL> alter table cust add name varchar(15);
+
+Table altered.
+
+SQL> desc cust;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ CUST_ID                                   NOT NULL NUMBER
+ ADDRESS                                            VARCHAR2(25)
+ CITY                                               VARCHAR2(20)
+ PH_NO                                              NUMBER
+ NAME                                               VARCHAR2(15)
+
+
+
+SQL> create table product1(p_id number primary key,pname varchar(20),price number default 0);
+
+Table created.
+
+SQL> desc product1;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ P_ID                                      NOT NULL NUMBER
+ PNAME                                              VARCHAR2(20)
+ PRICE                                              NUMBER
+
+
+
+SQL> create  table invoice_master (inv_id int,cust_id int,inv_date date,constraint fk_cust_id foreign key(cust_id)references cust(cust_id));
+
+Table created.
+
+SQL> desc invoice_master;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ INV_ID                                             NUMBER(38)
+ CUST_ID                                            NUMBER(38)
+ INV_DATE                                           DATE
+
+
+SQL> alter table invoice_master modify inv_id int primary key;
+
+Table altered.
+
+SQL> desc invoice_master;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ INV_ID                                    NOT NULL NUMBER(38)
+ CUST_ID                                            NUMBER(38)
+ INV_DATE                                           DATE
+
+SQL> create  table invoice_item(inv_id int,constraint inv_id foreign key(inv_id)references invoice_master(inv_id),p_id int,constraint p_id foreign key(p_id)references product1(p_id),quantity int);
+
+Table created.
+
+
+SQL> desc invoice_item;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ INV_ID                                             NUMBER(38)
+ P_ID                                               NUMBER(38)
+ QUANTITY                                           NUMBER(38)
+
+***************************************************************************************************************************
+===========================================
+EXPERIMENT NO:2
+-------------------------------------------
+IMPLEMENTING DML COMMANDS OF SQL
+===========================================
+
+
+SQL> insert into cust values(1,'elattuparambil','ekm',8976543578,'Anu');
+
+1 row created.
+
+SQL> insert into cust values(2,'abc house','tvm',9123456789,'Abu');
+
+1 row created.
+
+SQL> insert into cust values(3,'rose house','tvm',NULL,'Sreehari');
+
+1 row created.
+
+SQL> insert into cust values(4,'abcd house','tvm',8972635146,'veena');
+
+1 row created.
+
+SQL> insert into cust values(5,'white house','tvm',8972635677,'binu');
+
+1 row created.
+
+SQL> insert into cust values(6,'rose villa','tvm',NULL,'Anju');
+
+1 row created.
+
+
+SQL> alter table cust modify address varchar(15);
+
+Table altered.
+
+SQL> alter table cust modify city varchar(15);
+
+Table altered.
+
+SQL> select * from cust;
+
+   CUST_ID ADDRESS         CITY                 PH_NO NAME
+---------- --------------- --------------- ---------- ---------------
+         1 elattuparambil  ekm             8976543578 Anu
+         2 abc house       tvm             9123456789 Abu
+         3 rose house      tvm                        Sreehari
+         4 abcd house      tvm             8972635146 veena
+         5 white house     tvm             8972635677 binu
+         6 rose villa      tvm                        Anju
+
+6 rows selected.
+
+
+SQL> insert into product1 values(101,'pen',10);
+
+1 row created.
+
+SQL> insert into product1 values(102,'soap',65);
+
+1 row created.
+
+SQL> insert into product1 values(103,'pencil',10);
+
+1 row created.
+
+SQL> insert into product1 values(104,'powder',100);
+
+1 row created.
+
+SQL> insert into product1 values(105,'shampoo',110);
+
+1 row created.
+
+SQL> insert into product1 values(106,'handwash',60);
+
+1 row created.
+
+SQL> select*from product1;
+
+      P_ID PNAME                     PRICE
+---------- -------------------- ----------
+       101 pen                          10
+       102 soap                         65
+       103 pencil                       10
+       104 powder                      100
+       105 shampoo                     110
+       106 handwash                     60
+
+6 rows selected.
+
+SQL> select * from cust;
+
+   CUST_ID ADDRESS         CITY                 PH_NO NAME
+---------- --------------- --------------- ---------- ---------------
+         1 elattuparambil  ekm             8976543578 Anu
+         2 abc house       tvm             9123456789 Abu
+         3 rose house      tvm                        Sreehari
+         4 abcd house      tvm             8972635146 veena
+         5 white house     tvm             8972635677 binu
+         6 rose villa      tvm                        Anju
+
+6 rows selected.
+
+SQL> update cust set city='kozhikode'where city='ekm';
+
+1 row updated.
+
+SQL> select * from cust;
+
+   CUST_ID ADDRESS         CITY                 PH_NO NAME
+---------- --------------- --------------- ---------- ---------------
+         1 elattuparambil  kozhikode       8976543578 Anu
+         2 abc house       tvm             9123456789 Abu
+         3 rose house      tvm                        Sreehari
+         4 abcd house      tvm             8972635146 veena
+         5 white house     tvm             8972635677 binu
+         6 rose villa      tvm                        Anju
+
+6 rows selected.
+
+
+SQL> UPDATE cust set ph_no=9876543212 where cust_id=2;
+
+1 row updated.
+
+SQL> select * from cust;
+
+   CUST_ID ADDRESS         CITY                 PH_NO NAME
+---------- --------------- --------------- ---------- ---------------
+         1 elattuparambil  kozhikode       8976543578 Anu
+         2 abc house       tvm             9876543212 Abu
+         3 rose house      tvm                        Sreehari
+         4 abcd house      tvm             8972635146 veena
+         5 white house     tvm             8972635677 binu
+         6 rose villa      tvm                        Anju
+
+6 rows selected.
+
+
+SQL> delete from product1 where p_id=101;
+
+1 row deleted.
+
+SQL> select * from product1;
+
+      P_ID PNAME                     PRICE
+---------- -------------------- ----------
+       102 soap                         65
+       103 pencil                       10
+       104 powder                      100
+       105 shampoo                     110
+       106 handwash                     60
+
